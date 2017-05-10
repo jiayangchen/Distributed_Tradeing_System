@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping("")
     public String getIndex(){
-        return "index2";
+        return "index";
     }
 }
