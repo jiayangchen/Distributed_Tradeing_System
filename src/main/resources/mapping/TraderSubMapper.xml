@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.TraderSubDao">
+
+    <resultMap id="TraderSubBaseMap" type="com.cjy.ssm.model.Trader_Subscribe">
+        <id column="ts_id" property="ts_id" jdbcType="INTEGER"/>
+        <result column="t_id" property="t_id" jdbcType="INTEGER"/>
+        <result column="c_id" property="c_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getTrader_SubscribeListByTId" resultMap="TraderSubBaseMap">
+        SELECT * FROM trader_subscribe
+        WHERE
+        t_id = #{0}
+    </select>
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.WorkingOrderDao">
+
+    <resultMap id="WorkingOrderBaseMap" type="com.cjy.ssm.model.Working_Order">
+        <id column="wo_id" property="wo_id" jdbcType="INTEGER"/>
+        <result column="o_id" property="o_id" jdbcType="INTEGER"/>
+        <result column="wo_price" property="wo_price" jdbcType="DOUBLE"/>
+        <result column="wo_vol" property="wo_vol" jdbcType="INTEGER"/>
+        <result column="wo_modified_time" property="wo_modified_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectAllWorkingOrder" resultMap="WorkingOrderBaseMap">
+        SELECT * FROM working_order
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.BrokerUserDao">
+
+    <resultMap id="BrokerUserBaseMap" type="com.cjy.ssm.model.Broker_User">
+        <id column="bu_id" property="bu_id" jdbcType="INTEGER"/>
+        <result column="bu_name" property="bu_name" jdbcType="VARCHAR"/>
+        <result column="bu_email" property="bu_email" jdbcType="VARCHAR"/>
+        <result column="bu_password" property="bu_password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getBrokerUserById" resultMap="BrokerUserBaseMap">
+        SELECT * FROM broker_user
+        WHERE
+        bu_id = #{0}
+    </select>
+
+    <select id="getAllBrokerUsers" resultMap="BrokerUserBaseMap">
+        SELECT * FROM broker_user
+    </select>
+
+</mapper>

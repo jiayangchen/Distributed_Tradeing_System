@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.CommodityDao">
+
+    <resultMap id="CommodityBaseMap" type="com.cjy.ssm.model.Commodity">
+        <id column="c_id" property="c_id" jdbcType="INTEGER"/>
+        <result column="bu_id" property="bu_id" jdbcType="INTEGER"/>
+        <result column="c_name" property="c_name" jdbcType="VARCHAR"/>
+        <result column="c_price" property="c_price" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="getCommodityByCId" resultMap="CommodityBaseMap">
+        SELECT * FROM commodity
+        WHERE
+        c_id = #{0}
+    </select>
+
+    <update id="updateCPrice" parameterType="com.cjy.ssm.model.Commodity">
+        UPDATE commodity
+        SET c_price = #{1}
+        WHERE c_id = #{0}
+    </update>
+
+    <select id="getAllCommodityByBuId" resultMap="CommodityBaseMap">
+        SELECT * FROM commodity
+        WHERE
+        bu_id = #{0}
+    </select>
+</mapper>

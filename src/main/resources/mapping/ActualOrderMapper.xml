@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.ActualOrderDao">
+
+    <resultMap id="ActualOrderBaseMap" type="com.cjy.ssm.model.Actual_Order">
+        <id column="ao_id" property="ao_id" jdbcType="INTEGER"/>
+        <result column="sell_o_id" property="sell_o_id" jdbcType="INTEGER"/>
+        <result column="buy_o_id" property="buy_o_id" jdbcType="INTEGER"/>
+        <result column="ao_price" property="ao_price" jdbcType="DOUBLE"/>
+        <result column="ao_vol" property="ao_vol" jdbcType="INTEGER"/>
+        <result column="ao_create_time" property="ao_create_time" jdbcType="TIMESTAMP"/>
+        <result column="c_id" property="c_id" jdbcType="INTEGER"/>
+        <result column="ao_year" property="ao_year" jdbcType="INTEGER"/>
+        <result column="ao_month" property="ao_month" jdbcType="INTEGER"/>
+        <result column="market_price" property="market_price" jdbcType="DOUBLE"/>
+        <result column="commission" property="commission" jdbcType="DOUBLE"/>
+        <result column="bu_id" property="bu_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="addActualOrder" parameterType="com.cjy.ssm.model.Actual_Order">
+        INSERT INTO actual_order
+        (ao_id,sell_o_id,buy_o_id,ao_price,ao_vol,ao_create_time,c_id,ao_year,ao_month,market_price,commission,bu_id)
+        VALUES
+        (#{ao_id},#{sell_o_id},#{buy_o_id},#{ao_price},#{ao_vol},#{ao_create_time},
+        #{c_id},#{ao_year},#{ao_month},#{market_price},#{commission},#{bu_id})
+    </insert>
+
+    <select id="getAllAOByCId" resultMap="ActualOrderBaseMap">
+        SELECT * FROM actual_order
+        WHERE
+        c_id = #{0}
+    </select>
+
+    <select id="getAOByCIdandTime" resultMap="ActualOrderBaseMap">
+        SELECT * FROM actual_order
+        WHERE
+        c_id = #{0} AND ao_year = #{1} AND ao_month = #{2} ORDER BY ao_create_time
+    </select>
+
+    <select id="getAllAOByCIdandTime" resultMap="ActualOrderBaseMap">
+        SELECT * FROM actual_order
+        WHERE
+        c_id = #{0} AND ao_year =#{1} AND (ao_month BETWEEN #{2} AND #{4})
+    </select>
+
+</mapper>

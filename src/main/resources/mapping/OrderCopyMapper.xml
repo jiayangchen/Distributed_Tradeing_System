@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.OrderCopyDao">
+
+    <resultMap id="OrderCopyBaseMap" type="com.cjy.ssm.model.Order_Copy">
+        <id column="o_id" property="o_id" jdbcType="INTEGER"/>
+        <result column="t_id" property="t_id" jdbcType="INTEGER"/>
+        <result column="c_id" property="c_id" jdbcType="INTEGER"/>
+        <result column="o_vol" property="o_vol" jdbcType="INTEGER"/>
+        <result column="o_type" property="o_type" jdbcType="VARCHAR"/>
+        <result column="o_status" property="o_status" jdbcType="VARCHAR"/>
+        <result column="o_create_time" property="o_create_time" jdbcType="TIMESTAMP"/>
+        <result column="o_year" property="o_year" jdbcType="INTEGER"/>
+        <result column="o_month" property="o_month" jdbcType="INTEGER"/>
+        <result column="o_limit_value" property="o_limit_value" jdbcType="DOUBLE"/>
+        <result column="o_stop_value" property="o_stop_value" jdbcType="DOUBLE"/>
+        <result column="o_price" property="o_price" jdbcType="DOUBLE"/>
+        <result column="o_is_buy" property="o_is_buy" jdbcType="INTEGER"/>
+        <result column="former_o_id" property="former_o_id" jdbcType="INTEGER"/>
+        <result column="isFloat" property="isFloat" jdbcType="INTEGER"/>
+        <result column="stop_or_limit_value" property="stop_or_limit_value" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <insert id="addOrderIntoSell" parameterType="com.cjy.ssm.model.Order_Copy">
+        INSERT INTO order_sell
+        (t_id,c_id,o_vol,o_type,o_status,o_create_time,o_year,o_month,o_limit_value,o_stop_value,o_price,o_is_buy,former_o_id,isFloat,stop_or_limit_value)
+        VALUES
+        (#{t_id},#{c_id},#{o_vol},#{o_type},#{o_status},#{o_create_time},#{o_year},#{o_month},#{o_limit_value},#{o_stop_value},#{o_price},#{o_is_buy},#{former_o_id},#{isFloat},#{stop_or_limit_value})
+    </insert>
+
+    <insert id="addOrderIntoBuy" parameterType="com.cjy.ssm.model.Order_Copy">
+        INSERT INTO order_buy
+        (t_id,c_id,o_vol,o_type,o_status,o_create_time,o_year,o_month,o_limit_value,o_stop_value,o_price,o_is_buy,former_o_id,isFloat,stop_or_limit_value)
+        VALUES
+        (#{t_id},#{c_id},#{o_vol},#{o_type},#{o_status},#{o_create_time},#{o_year},#{o_month},#{o_limit_value},#{o_stop_value},#{o_price},#{o_is_buy},#{former_o_id},#{isFloat},#{stop_or_limit_value})
+    </insert>
+
+    <insert id="insertIntoBuyFinished" parameterType="com.cjy.ssm.model.Order_Copy">
+        INSERT INTO order_buy_finished
+        (t_id,c_id,o_vol,o_type,o_status,o_create_time,o_year,o_month,o_limit_value,o_stop_value,o_price,o_is_buy,former_o_id,isFloat,stop_or_limit_value)
+        VALUES
+        (#{t_id},#{c_id},#{o_vol},#{o_type},#{o_status},#{o_create_time},#{o_year},#{o_month},#{o_limit_value},#{o_stop_value},#{o_price},#{o_is_buy},#{former_o_id},#{isFloat},#{stop_or_limit_value})
+    </insert>
+
+    <insert id="insertIntoSellFinished" parameterType="com.cjy.ssm.model.Order_Copy">
+        INSERT INTO order_sell_finished
+        (t_id,c_id,o_vol,o_type,o_status,o_create_time,o_year,o_month,o_limit_value,o_stop_value,o_price,o_is_buy,former_o_id,isFloat,stop_or_limit_value)
+        VALUES
+        (#{t_id},#{c_id},#{o_vol},#{o_type},#{o_status},#{o_create_time},#{o_year},#{o_month},#{o_limit_value},#{o_stop_value},#{o_price},#{o_is_buy},#{former_o_id},#{isFloat},#{stop_or_limit_value})
+    </insert>
+
+    <select id="getAllSpecificBuyOrders" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_buy
+        WHERE
+        c_id = #{0} AND o_year = #{1} AND o_month = #{2} AND isFloat = #{3}
+        ORDER BY stop_or_limit_value DESC , o_create_time
+    </select>
+
+    <select id="getAllSpecificSellOrders" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_sell
+        WHERE
+        c_id = #{0} AND o_year = #{1} AND o_month = #{2} AND isFloat = #{3}
+        ORDER BY stop_or_limit_value, o_create_time
+    </select>
+
+    <select id="marketPriceSets" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_sell
+        WHERE
+        o_type = 'Limit' AND c_id = #{0}
+    </select>
+
+    <delete id="deleteFromSell" parameterType="com.cjy.ssm.model.Order_Copy">
+        DELETE FROM order_sell
+        WHERE
+        o_id = #{o_id}
+    </delete>
+
+    <delete id="deleteFromBuy" parameterType="com.cjy.ssm.model.Order_Copy">
+        DELETE FROM order_buy
+        WHERE
+        o_id = #{o_id}
+    </delete>
+
+    <update id="updateOnSell" parameterType="com.cjy.ssm.model.Order_Copy">
+        UPDATE order_sell
+        SET o_vol = #{1}, o_status = #{2}
+        WHERE o_id = #{0}
+    </update>
+
+    <update id="updateOnBuy" parameterType="com.cjy.ssm.model.Order_Copy">
+        UPDATE order_buy
+        SET o_vol = #{1}, o_status = #{2}
+        WHERE o_id = #{0}
+    </update>
+
+    <select id="selectSellOrderById" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_sell
+        WHERE
+        o_id = #{0}
+    </select>
+
+    <select id="selectBuyOrderById" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_buy
+        WHERE
+        o_id = #{0}
+    </select>
+
+    <select id="getFinishedBuyOrders" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_buy_finished
+        WHERE
+        c_id = #{0} AND o_year = #{1} AND o_month = #{2}
+    </select>
+
+    <select id="getFinishedSellOrders" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_sell_finished
+        WHERE
+        c_id = #{0} AND o_year = #{1} AND o_month = #{2}
+    </select>
+
+    <select id="getBuyCancelOrders" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_buy
+        WHERE
+        former_o_id = #{0} AND c_id = #{1} AND t_id = #{2} AND o_year = #{3} AND o_month = #{4}
+    </select>
+
+    <select id="getSellCancelOrders" resultMap="OrderCopyBaseMap">
+        SELECT * FROM order_sell
+        WHERE
+        former_o_id = #{0} AND c_id = #{1} AND t_id = #{2} AND o_year = #{3} AND o_month = #{4}
+    </select>
+
+</mapper>

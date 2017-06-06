@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjy.ssm.dao.GuidePriceDao">
+
+    <resultMap id="GuidePriceBaseMap" type="com.cjy.ssm.model.Guide_Price">
+        <id column="gp_id" property="gp_id" jdbcType="INTEGER"/>
+        <result column="c_id" property="c_id" jdbcType="INTEGER"/>
+        <result column="g_year" property="g_year" jdbcType="INTEGER"/>
+        <result column="g_month" property="g_month" jdbcType="INTEGER"/>
+        <result column="guide_price" property="guide_price" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="getGuidePrice" resultMap="GuidePriceBaseMap">
+        SELECT * FROM guide_price
+        WHERE
+        c_id = #{0} AND g_year = #{1} AND g_month = #{2}
+    </select>
+
+</mapper>
