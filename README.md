@@ -1,5 +1,5 @@
 # Distributed_Tradeing_System
-[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://github.com/jiayangchen/Distributed_Tradeing_System)
 
 ### 系统简介
 系统分为Trader UI、Trader_Gateway、Broker_Gateway、Broker UI，此项目为Broker_Gateway具体实现
